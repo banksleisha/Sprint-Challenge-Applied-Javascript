@@ -19,13 +19,12 @@
 // Create a card for each of the articles and add the card to the DOM.
 
 axios
-
-        .get ('https://lambda-times-backend.herokuapp.com/articles')
-        .then(function(response) {
+    .get ('https://lambda-times-backend.herokuapp.com/articles')
+    .then(function(response) {
             console.log(response);
             newArticle(response);
-            entryPoint.appendChild(newCard);
-        })
+            entryPoint.append(newCard);
+    })
 
     .catch(error => {
         console.log('error')
@@ -36,6 +35,7 @@ function newArticle(cardData) {
     let cardArray = cardData.data.articles
 
     for (let key in cardArray) {
+        
         let infoArr = cardArray[key]
 
         for (let value in infoArr) {
@@ -43,20 +43,24 @@ function newArticle(cardData) {
             const card = document.createElement('div');
             const headline = document.createElement('div');
             const author =  document.createElement('div');
-            const authorImg = document.createElement('img');
             const imgContainer = document.createElement('div');
+            const authorImg = document.createElement('img');
             const writer = document.createElement('span');
 
-            card.appendChild(headline);
-            card.appendChild(author);
-            card.appendChild(authorImg);
-            card.appendChild(imgContainer);
-            card.appendChild(writer);
+            
 
             card.classList.add('card');
             headline.classList.add('headline');
             author.classList.add('author');
-            imgContainer.classList.add('img-container');
+            //authorImg.classList.add(authorImg);
+            //why are they so big? DON'T KNOW
+            imgContainer.classList.add("img-container");
+
+            card.appendChild(headline);
+            card.appendChild(author);
+            author.appendChild(imgContainer);
+            imgContainer.appendChild(authorImg);
+            author.appendChild(writer);
 
             headline.textContent = infoArr[value].headline;
             writer.textContent = infoArr[value].authorName;
@@ -66,5 +70,5 @@ function newArticle(cardData) {
             entryPoint.appendChild(card);
         };
     }
-
+    return newCard;
 }
